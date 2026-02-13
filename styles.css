@@ -1,87 +1,149 @@
-/* Сброс и базовые настройки */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-               Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(135deg, #09203f 0%, #537895 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+    background-color: #010409;
+    color: #f0f6fc;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Контейнер для центрирования */
-.download-container {
-  width: 100%;
-  max-width: 400px;
-  padding: 0 16px;
+.page-wrapper {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Собственно карточка */
-.download-box {
-  position: relative;
-  background-color: rgba(20, 40, 70, 0.7);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+.github-header {
+    background-color: #010409;
+    border-bottom: 1px solid #21262d;
+    padding: 16px 0;
 }
 
-/* Иконка сверху */
-.download-icon {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 20px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
-/* Заголовок */
-h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 16px;
+.github-logo {
+    width: 32px;
+    height: 32px;
+    fill: #f0f6fc;
 }
 
-/* Текст статуса */
-#loader-text {
-  font-size: 16px;
-  opacity: 0.9;
-  margin-bottom: 12px;
-}
-
-/* Текст ошибки */
-.error-text {
-  font-size: 14px;
-  color: #ff8080;
-  min-height: 1.2em; /* чтобы не прыгал layout */
-}
-
-/* Адаптив */
-@media (max-width: 480px) {
-  .download-box {
-    padding: 20px;
-  }
-  h1 {
+.header-title {
     font-size: 20px;
-  }
-  #loader-text, .error-text {
-    font-size: 14px;
-  }
-  .download-icon {
+    font-weight: 600;
+    color: #f0f6fc;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.card {
+    background-color: #0c1015;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 16px 32px rgba(1, 4, 9, 0.85);
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #f0f6fc;
+}
+
+.spinner {
     width: 40px;
     height: 40px;
-    margin-bottom: 16px;
-  }
+    border: 3px solid #30363d;
+    border-top: 3px solid #58a6ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.muted {
+    color: #8b949e;
+    font-size: 14px;
+}
+
+.github-footer {
+    background-color: #010409;
+    border-top: 1px solid #21262d;
+    padding: 24px;
+    margin-top: auto;
+}
+
+.footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.footer-logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo {
+    width: 24px;
+    height: 24px;
+    fill: #6e7681;
+}
+
+.footer-copyright {
+    color: #6e7681;
+    font-size: 12px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #8b949e;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.footer-links a:hover {
+    color: #58a6ff;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+    .card { padding: 24px; }
+    h1 { font-size: 20px; }
 }
